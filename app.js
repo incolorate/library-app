@@ -1,69 +1,80 @@
-let booksContainer = document.querySelector(".books-container");
 let myLibrary = [];
-// New book query selectors
-let addBookTitle = document.querySelector("#title");
-let addBookAuthor = document.querySelector("#author ");
-let addBookStatus = document.querySelector("#status");
-let addBook = document.querySelector("#add-book");
-// Tesst
 
-// Create new book
-function Book(title, author, read, id) {
+function Book(title, author, read) {
   this.title = title;
   this.author = author;
   this.read = read;
-  this.id = id;
 }
 
-// Push book to myLibrary
-function addBookToLibrary(book) {
+function addBookToLibrary() {
+  let title = document.querySelector("#title").value;
+  let author = document.querySelector("#author").value;
+  let read = document.querySelector("#status").checked;
+
+  let book = new Book(title, author, read);
   myLibrary.push(book);
+
+  renderBooks();
 }
-// Add new book dynamically and push it to myLibrary
-function createNewBook() {
-  let bookStatus = "";
-  if (addBookStatus.checked) {
-    bookStatus = "Read";
-  } else {
-    bookStatus = "Not read yet";
-  }
-  let newBook = new Book(addBookTitle.value, addBookAuthor.value, bookStatus);
-  // Clean the page before rerendering
+
+function renderBooks() {
+  let booksContainer = document.querySelector(".books-container");
+  // Rerender the books every time
   booksContainer.innerHTML = "";
+  for (let i = 0; i < myLibrary.length; i++) {
+    //  Get the book from my library
+    let currentBook = myLibrary[i];
 
-  addBookToLibrary(newBook);
-  displayBooks(myLibrary);
-}
-
-// Display all books in my library
-function displayBooks(array) {
-  for (i = 0; i < array.length; i++) {
-    // create the element for the book
-    let bookTitle = document.createElement("p");
-    let bookAuthor = document.createElement("p");
-    let bookRead = document.createElement("p");
-    let removeButton = document.createElement("button");
+    // Individual book container
     let bookContainer = document.createElement("div");
-    // Set the id of an object based on the position in the array
-    array[i].id = i;
-    bookContainer.setAttribute("class", `book${i}`);
-    removeButton.setAttribute("value", `${i}`);
+    bookContainer.setAttribute("id", `book${i}`);
 
-    // Book t/a/r to element
-    bookTitle.innerText = array[i].title;
-    bookAuthor.innerText = array[i].author;
-    bookRead.innerText = array[i].read;
+    // Title
+    let title = document.createElement("p");
+    title.innerText = currentBook.title;
+
+    // Author
+    let author = document.createElement("p");
+    author.innerText = currentBook.author;
+
+    // Read status
+    let read = document.createElement("p");
+    read.innerText = "Read" + (currentBook.read ? " Yes" : "No");
+
+    // Remove a book
+    let removeButton = document.createElement("button");
+    removeButton.innerHTML = "X";
+    removeButton.onclick = function () {
+      removeBook(i);
+    };
+
+    // Change the read status
+    let toggleButton = document.createElement("button");
+    toggleButton.innerHTML = "Read";
+    toggleButton.onclick = function () {
+      toggleRead(i);
+    };
+
+    // Al the components to book container
+    bookContainer.appendChild(title);
+    bookContainer.appendChild(author);
+    bookContainer.appendChild(read);
+    bookContainer.appendChild(removeButton);
+    bookContainer.appendChild(toggleButton);
+    // Book container to BOOKS container
 
     booksContainer.appendChild(bookContainer);
-    bookContainer.appendChild(bookTitle);
-    bookContainer.appendChild(bookAuthor);
-    bookContainer.appendChild(bookRead);
-    bookContainer.appendChild(removeButton);
-
-    removeButton.addEventListener("click", () => {
-      myLibrary.splice(removeButton.value, 1);
-    });
   }
 }
 
-addBook.addEventListener("click", createNewBook);
+function removeBook(i) {
+  myLibrary.splice(i, 1);
+  renderBooks();
+}
+
+function toggleRead(i) {
+  myLibrary[i].read = !myLibrary[i].read;
+  renderBooks();
+}
+
+document.querySelector("#add-book").addEventListener("click", addBookToLibrary);
