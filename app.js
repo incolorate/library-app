@@ -13,9 +13,6 @@ function Book(title, author, read, id) {
   this.author = author;
   this.read = read;
   this.id = id;
-  this.remove = function (id) {
-    delete myLibrary[id];
-  };
 }
 
 // Push book to myLibrary
@@ -49,7 +46,9 @@ function displayBooks(array) {
     let bookContainer = document.createElement("div");
     // Set the id of an object based on the position in the array
     array[i].id = i;
-    bookContainer.setAttribute("id", `${i}`);
+    bookContainer.setAttribute("class", `book${i}`);
+    removeButton.setAttribute("value", `${i}`);
+
     // Book t/a/r to element
     bookTitle.innerText = array[i].title;
     bookAuthor.innerText = array[i].author;
@@ -60,6 +59,10 @@ function displayBooks(array) {
     bookContainer.appendChild(bookAuthor);
     bookContainer.appendChild(bookRead);
     bookContainer.appendChild(removeButton);
+
+    removeButton.addEventListener("click", () => {
+      myLibrary.splice(removeButton.value, 1);
+    });
   }
 }
 
