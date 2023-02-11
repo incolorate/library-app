@@ -22,34 +22,7 @@ function Book(title, author, read, id) {
 function addBookToLibrary(book) {
   myLibrary.push(book);
 }
-
-//
-
-// Display all books in my library
-function displayBooks(array) {
-  for (i = 0; i < array.length; i++) {
-    let bookTitle = document.createElement("p");
-    let bookAuthor = document.createElement("p");
-    let bookRead = document.createElement("p");
-    let removeButton = document.createElement("button");
-    let divForBook = document.createElement("div");
-    array[i].id = i;
-    bookTitle.innerText = array[i].title;
-    bookAuthor.innerText = array[i].author;
-    bookRead.innerText = array[i].read;
-    bookContainer.appendChild(bookTitle);
-    bookContainer.appendChild(bookAuthor);
-    bookContainer.appendChild(bookRead);
-    bookContainer.appendChild(removeButton);
-  }
-}
-
-// Remove the book button
-function removeBook(x) {
-  myLibrary[x].remove(myLibrary[x].id);
-}
-
-// Add new book dynamically
+// Add new book dynamically and push it to myLibrary
 function createNewBook() {
   let bookStatus = "";
   if (addBookStatus.checked) {
@@ -58,8 +31,36 @@ function createNewBook() {
     bookStatus = "Not read yet";
   }
   let newBook = new Book(addBookTitle.value, addBookAuthor.value, bookStatus);
+  // Clean the page before rerendering
+  booksContainer.innerHTML = "";
+
   addBookToLibrary(newBook);
   displayBooks(myLibrary);
+}
+
+// Display all books in my library
+function displayBooks(array) {
+  for (i = 0; i < array.length; i++) {
+    // create the element for the book
+    let bookTitle = document.createElement("p");
+    let bookAuthor = document.createElement("p");
+    let bookRead = document.createElement("p");
+    let removeButton = document.createElement("button");
+    let bookContainer = document.createElement("div");
+    // Set the id of an object based on the position in the array
+    array[i].id = i;
+    bookContainer.setAttribute("id", `${i}`);
+    // Book t/a/r to element
+    bookTitle.innerText = array[i].title;
+    bookAuthor.innerText = array[i].author;
+    bookRead.innerText = array[i].read;
+
+    booksContainer.appendChild(bookContainer);
+    bookContainer.appendChild(bookTitle);
+    bookContainer.appendChild(bookAuthor);
+    bookContainer.appendChild(bookRead);
+    bookContainer.appendChild(removeButton);
+  }
 }
 
 addBook.addEventListener("click", createNewBook);
