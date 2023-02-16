@@ -10,12 +10,25 @@
   <body>
     <div class="container">
       <div class="nav-container">
-        <h1>Logo</h1>
+        <h1>BookCatalog</h1>
+        <button type="button">Sign In</button>
       </div>
+      <div class="modal-prompt">
+        <label for="#modal-button" class="button-label">Add Book</label>
+        <button
+          type="button"
+          class="modal-button normal-rotate"
+          id="modal-button"
+        >
+          +
+        </button>
+      </div>
+
       <div class="new-book-container">
         <form action="" id="new-book">
           <label for="#title" class="input-text">Book title:</label>
           <input
+            required
             type="text"
             id="title"
             class="input-areas"
@@ -23,6 +36,7 @@
           />
           <label for="#author" class="input-text">Author</label>
           <input
+            required
             type="text"
             id="author"
             class="input-areas"

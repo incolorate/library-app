@@ -10,10 +10,10 @@ function addBookToLibrary() {
   let title = document.querySelector("#title").value;
   let author = document.querySelector("#author").value;
   let read = document.querySelector("#status").checked;
-
-  let book = new Book(title, author, read);
-  myLibrary.push(book);
-
+  if (title.length > 1 && author.length >= 3) {
+    let book = new Book(title, author, read);
+    myLibrary.push(book);
+  }
   renderBooks();
 }
 
@@ -31,15 +31,19 @@ function renderBooks() {
 
     // Title
     let title = document.createElement("p");
-    title.innerText = currentBook.title;
+    title.innerText = `Title: ` + currentBook.title;
 
     // Author
     let author = document.createElement("p");
-    author.innerText = currentBook.author;
+    author.innerText = `Author: ` + currentBook.author;
 
     // Read status
     let read = document.createElement("p");
-    read.innerText = "Read" + (currentBook.read ? " Yes" : "No");
+    read.innerHTML =
+      "Read" +
+      (currentBook.read
+        ? ": <span class=yes>Yes</span>"
+        : ": <span class=no>No</span>");
 
     // Remove a book
     let removeButton = document.createElement("button");
@@ -56,13 +60,16 @@ function renderBooks() {
     };
 
     // Al the components to book container
+    bookContainer.appendChild(removeButton);
     bookContainer.appendChild(title);
     bookContainer.appendChild(author);
     bookContainer.appendChild(read);
-    bookContainer.appendChild(removeButton);
     bookContainer.appendChild(toggleButton);
+    // Add  classes
+    bookContainer.classList.add("book-card");
+    removeButton.classList.add("remove-button");
+    toggleButton.classList.add("read-button");
     // Book container to BOOKS container
-
     booksContainer.appendChild(bookContainer);
   }
 }
@@ -77,4 +84,16 @@ function toggleRead(i) {
   renderBooks();
 }
 
+// Toggle add book modal
+function toggleModal() {
+  let modalButton = document.querySelector(".new-book-container");
+  document.querySelector(".modal-button").classList.toggle("rotate");
+  document.querySelector(".modal-button").classList.toggle("normal-rotate");
+  if (modalButton.style.display == "" || modalButton.style.display == "none") {
+    modalButton.style.display = "contents";
+  } else if (modalButton.style.display === "contents")
+    modalButton.style.display = "none";
+}
+
+document.querySelector(".modal-button").addEventListener("click", toggleModal);
 document.querySelector("#add-book").addEventListener("click", addBookToLibrary);
