@@ -14,6 +14,8 @@ function addBookToLibrary() {
     let book = new Book(title, author, read);
     myLibrary.push(book);
   }
+  document.querySelector("#title").value = "";
+  document.querySelector("#author").value = "";
   renderBooks();
 }
 
@@ -89,6 +91,7 @@ function toggleModal() {
   let modalButton = document.querySelector(".new-book-container");
   document.querySelector(".modal-button").classList.toggle("rotate");
   document.querySelector(".modal-button").classList.toggle("normal-rotate");
+
   if (modalButton.style.display == "" || modalButton.style.display == "none") {
     modalButton.style.display = "contents";
   } else if (modalButton.style.display === "contents")

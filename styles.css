@@ -57,6 +57,7 @@ body {
 }
 .new-book-container {
   padding: 10px;
+  display: none;
 }
 
 #add-book {
@@ -178,9 +179,29 @@ input:checked + .slider:before {
   border-radius: 50%;
 }
 
+/* Prompt for books when pressing + */
+
 .modal-prompt {
-  display: none;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  background: none;
+  color: var(--neutral-800);
 }
+.button-label {
+  font-size: 1.5rem;
+}
+
+.modal-button {
+  background: none;
+  border: none;
+  font-size: 6rem;
+  margin: 0;
+}
+
+/* Rotate the X when opening and closing */
 .rotate {
   transform: rotate(30deg);
   transition-duration: 0.5s;
@@ -188,31 +209,4 @@ input:checked + .slider:before {
 .normal-rotate {
   transform: rotate(90deg);
   transition-duration: 0.5s;
-}
-
-@media (min-width: 700px) {
-  .new-book-container {
-    display: none;
-    position: relative;
-    background-color: var(--neutral-400);
-  }
-  .modal-prompt {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    text-align: center;
-    background: none;
-    color: var(--neutral-800);
-  }
-  .button-label {
-    font-size: 1.5rem;
-  }
-
-  .modal-button {
-    background: none;
-    border: none;
-    font-size: 6rem;
-    margin: 0;
-  }
 }
