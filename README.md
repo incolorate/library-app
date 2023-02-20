@@ -1,11 +1,11 @@
-### BookCatalog
+# BookCatalog
 
 Allows users to keep track of their personal book collections by creating and managing book objects.
 * Add new books to your library by filling in the title, author, and read status fields and clicking the "Add Book" button
 * Update the read status of your books
 * Remove books from your collection
 
-# Limitations
+###Limitations
 
 The Library App does not currently have local storage. As a result, your book collection will not be saved if you refresh the page or close the browser.
 
